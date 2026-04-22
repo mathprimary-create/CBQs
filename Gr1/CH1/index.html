@@ -1,1 +1,948 @@
-hello
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Number System 0-99 | Grade 1 Math Quiz</title>
+  <style>
+    :root {
+      --bg1: #fef6ff;
+      --bg2: #eef9ff;
+      --card: rgba(255, 255, 255, 0.96);
+      --text: #1f2a44;
+      --primary: #5b7cff;
+      --primary-dark: #3d5ce0;
+      --accent: #ffb703;
+      --success: #2a9d8f;
+      --danger: #e76f51;
+      --muted: #6b7280;
+      --shadow: 0 12px 30px rgba(31, 42, 68, 0.12);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, #fff4cc 0%, transparent 20%),
+        radial-gradient(circle at top right, #dff6ff 0%, transparent 22%),
+        radial-gradient(circle at bottom left, #e7ffe8 0%, transparent 18%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      color: var(--text);
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 900px;
+      position: relative;
+    }
+
+    .screen {
+      display: none;
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .screen::before,
+    .screen::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.14;
+      z-index: 0;
+    }
+
+    .screen::before {
+      width: 180px;
+      height: 180px;
+      background: #a0c4ff;
+      top: -40px;
+      right: -40px;
+    }
+
+    .screen::after {
+      width: 140px;
+      height: 140px;
+      background: #ffd6a5;
+      bottom: -30px;
+      left: -30px;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo-splash {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #ffffff, #edf7ff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 9999;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .logo-splash img {
+      max-width: 220px;
+      width: 60%;
+      height: auto;
+      margin-bottom: 18px;
+    }
+
+    .logo-splash h2 {
+      margin: 0;
+      font-size: 1.4rem;
+      color: var(--text);
+    }
+
+    .logo-splash p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    h1, h2, h3 {
+      margin-top: 0;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0 22px;
+    }
+
+    .pill {
+      background: #f3f6ff;
+      color: var(--text);
+      border: 1px solid #d8e0ff;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .btn {
+      appearance: none;
+      border: none;
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease, background 0.15s ease;
+      width: 100%;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.65;
+      transform: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: #eef2ff;
+      color: var(--text);
+    }
+
+    .btn-option {
+      text-align: left;
+      background: #ffffff;
+      border: 2px solid #dde5ff;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .btn-option:hover {
+      background: #f6f8ff;
+    }
+
+    .btn-option.correct {
+      border-color: var(--success);
+      background: #e7fff7;
+      color: #0c5b51;
+    }
+
+    .btn-option.wrong {
+      border-color: var(--danger);
+      background: #fff1ed;
+      color: #8a2f1b;
+    }
+
+    .top-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .stat {
+      background: #f8faff;
+      border: 1px solid #dce5ff;
+      border-radius: 16px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .progress-wrap {
+      margin-bottom: 18px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 12px;
+      background: #e7ecff;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), #ffda6a);
+      transition: width 0.3s ease;
+    }
+
+    .question-card {
+      background: #fff;
+      border: 1px solid #e3e9ff;
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .question-number {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .question-text {
+      font-size: 1.25rem;
+      line-height: 1.45;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .feedback {
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 14px;
+      display: none;
+      line-height: 1.5;
+      font-size: 0.98rem;
+    }
+
+    .feedback.show {
+      display: block;
+    }
+
+    .feedback.info {
+      background: #eef6ff;
+      border: 1px solid #cfe3ff;
+      color: #23416d;
+    }
+
+    .feedback.success {
+      background: #e8fff6;
+      border: 1px solid #bdeedb;
+      color: #14564d;
+    }
+
+    .feedback.error {
+      background: #fff1ed;
+      border: 1px solid #ffd0c2;
+      color: #7d2d1f;
+    }
+
+    .footer-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    .footer-row .btn {
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .challenge-badge {
+      display: inline-block;
+      background: #fff3cd;
+      color: #7a5500;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .result-box {
+      text-align: center;
+    }
+
+    .result-score {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 10px 0;
+    }
+
+    .result-text {
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .mini-list {
+      text-align: left;
+      background: #f8faff;
+      border: 1px solid #dce5ff;
+      border-radius: 16px;
+      padding: 16px;
+      margin: 18px 0 22px;
+    }
+
+    .mini-list ul {
+      margin: 0;
+      padding-left: 20px;
+      line-height: 1.7;
+    }
+
+    .brand-mini {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .brand-mini img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+      border-radius: 10px;
+      background: #fff;
+      padding: 4px;
+      border: 1px solid #dbe3ff;
+    }
+
+    @media (max-width: 700px) {
+      .screen {
+        padding: 18px;
+      }
+
+      .top-bar {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .question-text {
+        font-size: 1.08rem;
+      }
+
+      .result-score {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="logo-splash" id="logoSplash">
+    <img src="assets/innovine-logo.png" alt="Innovine Logo" />
+    <h2>Innovine Learning Quiz</h2>
+    <p>Get ready to begin!</p>
+  </div>
+
+  <div class="app">
+    <section class="screen active" id="introScreen">
+      <div class="content">
+        <div class="brand-mini">
+          <img src="assets/innovine-logo.png" alt="Innovine Logo" />
+          <div>
+            <strong>Innovine</strong><br />
+            <span style="color:#6b7280;">Interactive chapter quiz</span>
+          </div>
+        </div>
+
+        <h1>Number System 0-99</h1>
+        <p class="subtitle">
+          Grade 1 • Math • Topic: Number System 0-99
+        </p>
+
+        <div class="pill-row">
+          <div class="pill">20 Questions</div>
+          <div class="pill">60 Sec / Question</div>
+          <div class="pill">1 Retry</div>
+          <div class="pill">Final Challenge</div>
+        </div>
+
+        <div class="mini-list">
+          <strong>This quiz includes:</strong>
+          <ul>
+            <li>Intro screen</li>
+            <li>Visible score tracker</li>
+            <li>One retry after the first wrong answer</li>
+            <li>Correct answer with explanation after second wrong attempt</li>
+            <li>Final challenge at the end</li>
+            <li>Result screen with summary</li>
+          </ul>
+        </div>
+
+        <button class="btn btn-primary" id="startBtn">Start Quiz</button>
+      </div>
+    </section>
+
+    <section class="screen" id="challengeScreen">
+      <div class="content">
+        <span class="challenge-badge">Final Challenge</span>
+        <h2>You made it to the last question!</h2>
+        <p class="subtitle">
+          This is your final challenge. Take your time and do your best.
+        </p>
+        <button class="btn btn-primary" id="beginChallengeBtn">Start Final Challenge</button>
+      </div>
+    </section>
+
+    <section class="screen" id="quizScreen">
+      <div class="content">
+        <div class="top-bar">
+          <div class="stat">
+            <div class="stat-label">Score</div>
+            <div class="stat-value" id="scoreValue">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Question</div>
+            <div class="stat-value" id="questionCount">1 / 20</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Time Left</div>
+            <div class="stat-value" id="timerValue">60s</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Try</div>
+            <div class="stat-value" id="tryValue">1 / 2</div>
+          </div>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="progress-label">
+            <span>Progress</span>
+            <span id="progressText">0%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+
+        <div class="question-card">
+          <div class="question-number" id="questionNumber">Question 1</div>
+          <p class="question-text" id="questionText">Question text goes here.</p>
+        </div>
+
+        <div id="optionsWrap"></div>
+
+        <div class="feedback info" id="feedbackBox"></div>
+
+        <div class="footer-row">
+          <button class="btn btn-secondary" id="nextBtn" disabled>Next</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="resultScreen">
+      <div class="content result-box">
+        <div class="brand-mini" style="justify-content:center;">
+          <img src="assets/innovine-logo.png" alt="Innovine Logo" />
+          <div>
+            <strong>Innovine</strong><br />
+            <span style="color:#6b7280;">Quiz completed</span>
+          </div>
+        </div>
+
+        <h2>Your Result</h2>
+        <div class="result-score" id="finalScore">0 / 20</div>
+        <p class="result-text" id="resultMessage">Great effort!</p>
+
+        <div class="mini-list">
+          <ul>
+            <li><strong>Correct answers:</strong> <span id="correctCount">0</span></li>
+            <li><strong>Total questions:</strong> 20</li>
+            <li><strong>Best possible score:</strong> 20</li>
+          </ul>
+        </div>
+
+        <button class="btn btn-primary" id="restartBtn">Play Again</button>
+      </div>
+    </section>
+  </div>
+
+  <audio id="audioWrong" preload="auto" src="assets/lose.mp3"></audio>
+  <audio id="audioTimer" preload="auto" src="assets/timer-sound.mp3" loop></audio>
+  <audio id="audioCorrect" preload="auto" src="assets/win.mp3"></audio>
+  <audio id="audioFinalWin" preload="auto" src="assets/win1.mp3"></audio>
+
+  <script>
+    const quizData = [
+      {
+        question: "What number comes after 7?",
+        options: ["6", "8", "9", "5"],
+        answerIndex: 1,
+        explanation: "8 comes after 7."
+      },
+      {
+        question: "What number comes before 10?",
+        options: ["9", "8", "11", "7"],
+        answerIndex: 0,
+        explanation: "9 comes before 10."
+      },
+      {
+        question: "Which number is between 4 and 6?",
+        options: ["3", "5", "7", "6"],
+        answerIndex: 1,
+        explanation: "5 comes between 4 and 6."
+      },
+      {
+        question: "Which number shows 2 tens and 3 ones?",
+        options: ["23", "32", "13", "20"],
+        answerIndex: 0,
+        explanation: "2 tens means 20 and 3 ones means 3, so the number is 23."
+      },
+      {
+        question: "Which number is bigger?",
+        options: ["12", "21", "11", "10"],
+        answerIndex: 1,
+        explanation: "21 is greater than 12, 11, and 10."
+      },
+      {
+        question: "What is the smallest number?",
+        options: ["9", "5", "7", "6"],
+        answerIndex: 1,
+        explanation: "5 is the smallest number."
+      },
+      {
+        question: "What comes after 19?",
+        options: ["18", "20", "21", "17"],
+        answerIndex: 1,
+        explanation: "20 comes after 19."
+      },
+      {
+        question: "Which number has 4 tens and 0 ones?",
+        options: ["4", "40", "14", "44"],
+        answerIndex: 1,
+        explanation: "4 tens means 40."
+      },
+      {
+        question: "What comes before 30?",
+        options: ["29", "31", "28", "27"],
+        answerIndex: 0,
+        explanation: "29 comes just before 30."
+      },
+      {
+        question: "Which number is greater?",
+        options: ["35", "53", "25", "45"],
+        answerIndex: 1,
+        explanation: "53 is the greatest number here."
+      },
+      {
+        question: "What number comes after 49?",
+        options: ["48", "50", "51", "47"],
+        answerIndex: 1,
+        explanation: "50 comes after 49."
+      },
+      {
+        question: "Which is the smallest?",
+        options: ["65", "56", "45", "54"],
+        answerIndex: 2,
+        explanation: "45 is the smallest among these numbers."
+      },
+      {
+        question: "What is between 70 and 72?",
+        options: ["71", "69", "73", "70"],
+        answerIndex: 0,
+        explanation: "71 comes between 70 and 72."
+      },
+      {
+        question: "Which number has 5 tens and 2 ones?",
+        options: ["25", "52", "50", "55"],
+        answerIndex: 1,
+        explanation: "5 tens is 50 and 2 ones is 2, so the number is 52."
+      },
+      {
+        question: "Which number is greater?",
+        options: ["88", "78", "68", "58"],
+        answerIndex: 0,
+        explanation: "88 is greater than 78, 68, and 58."
+      },
+      {
+        question: "What comes before 100?",
+        options: ["99", "98", "97", "101"],
+        answerIndex: 0,
+        explanation: "99 comes before 100."
+      },
+      {
+        question: "Arrange in ascending order: 12, 21, 10",
+        options: ["10, 12, 21", "12, 10, 21", "21, 12, 10", "10, 21, 12"],
+        answerIndex: 0,
+        explanation: "Ascending order means smallest to biggest: 10, 12, 21."
+      },
+      {
+        question: "Arrange in descending order: 45, 54, 35",
+        options: ["54, 45, 35", "35, 45, 54", "45, 54, 35", "54, 35, 45"],
+        answerIndex: 0,
+        explanation: "Descending order means biggest to smallest: 54, 45, 35."
+      },
+      {
+        question: "Which number is missing? 60, 61, __, 63",
+        options: ["62", "64", "65", "61"],
+        answerIndex: 0,
+        explanation: "62 comes after 61 and before 63."
+      },
+      {
+        question: "FINAL CHALLENGE: Which number is the greatest?",
+        options: ["89", "98", "79", "88"],
+        answerIndex: 1,
+        explanation: "98 is the greatest number."
+      }
+    ];
+
+    const QUESTION_TIME = 60;
+    const TOTAL_QUESTIONS = quizData.length;
+
+    const logoSplash = document.getElementById("logoSplash");
+    const introScreen = document.getElementById("introScreen");
+    const challengeScreen = document.getElementById("challengeScreen");
+    const quizScreen = document.getElementById("quizScreen");
+    const resultScreen = document.getElementById("resultScreen");
+
+    const startBtn = document.getElementById("startBtn");
+    const beginChallengeBtn = document.getElementById("beginChallengeBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const restartBtn = document.getElementById("restartBtn");
+
+    const scoreValue = document.getElementById("scoreValue");
+    const questionCount = document.getElementById("questionCount");
+    const timerValue = document.getElementById("timerValue");
+    const tryValue = document.getElementById("tryValue");
+    const progressFill = document.getElementById("progressFill");
+    const progressText = document.getElementById("progressText");
+    const questionNumber = document.getElementById("questionNumber");
+    const questionText = document.getElementById("questionText");
+    const optionsWrap = document.getElementById("optionsWrap");
+    const feedbackBox = document.getElementById("feedbackBox");
+
+    const finalScore = document.getElementById("finalScore");
+    const correctCount = document.getElementById("correctCount");
+    const resultMessage = document.getElementById("resultMessage");
+
+    const audioWrong = document.getElementById("audioWrong");
+    const audioTimer = document.getElementById("audioTimer");
+    const audioCorrect = document.getElementById("audioCorrect");
+    const audioFinalWin = document.getElementById("audioFinalWin");
+
+    let currentIndex = 0;
+    let score = 0;
+    let attempts = 0;
+    let timer = QUESTION_TIME;
+    let timerInterval = null;
+    let locked = false;
+
+    function showScreen(screen) {
+      [introScreen, challengeScreen, quizScreen, resultScreen].forEach(s => s.classList.remove("active"));
+      screen.classList.add("active");
+    }
+
+    function playAudio(audioEl) {
+      if (!audioEl) return;
+      audioEl.currentTime = 0;
+      audioEl.play().catch(() => {});
+    }
+
+    function stopAudio(audioEl) {
+      if (!audioEl) return;
+      audioEl.pause();
+      audioEl.currentTime = 0;
+    }
+
+    function resetFeedback() {
+      feedbackBox.className = "feedback info";
+      feedbackBox.textContent = "";
+      feedbackBox.classList.remove("show");
+    }
+
+    function startTimer() {
+      clearInterval(timerInterval);
+      timer = QUESTION_TIME;
+      timerValue.textContent = timer + "s";
+      stopAudio(audioTimer);
+      playAudio(audioTimer);
+
+      timerInterval = setInterval(() => {
+        timer--;
+        timerValue.textContent = timer + "s";
+        if (timer <= 0) {
+          clearInterval(timerInterval);
+          stopAudio(audioTimer);
+          handleTimeUp();
+        }
+      }, 1000);
+    }
+
+    function stopTimer() {
+      clearInterval(timerInterval);
+      stopAudio(audioTimer);
+    }
+
+    function handleTimeUp() {
+      if (locked) return;
+      locked = true;
+      const currentQuestion = quizData[currentIndex];
+      showCorrectAnswer(currentQuestion.answerIndex, currentQuestion.explanation, "Time is up!");
+      nextBtn.disabled = false;
+    }
+
+    function renderQuestion() {
+      const q = quizData[currentIndex];
+      attempts = 0;
+      locked = false;
+      nextBtn.disabled = true;
+      resetFeedback();
+
+      questionNumber.textContent = currentIndex === TOTAL_QUESTIONS - 1
+        ? "Final Challenge"
+        : `Question ${currentIndex + 1}`;
+
+      questionText.textContent = q.question;
+      questionCount.textContent = `${currentIndex + 1} / ${TOTAL_QUESTIONS}`;
+      scoreValue.textContent = score;
+      tryValue.textContent = "1 / 2";
+
+      const progress = Math.round((currentIndex / TOTAL_QUESTIONS) * 100);
+      progressFill.style.width = progress + "%";
+      progressText.textContent = progress + "%";
+
+      optionsWrap.innerHTML = "";
+
+      q.options.forEach((option, index) => {
+        const btn = document.createElement("button");
+        btn.className = "btn btn-option";
+        btn.textContent = `${String.fromCharCode(65 + index)}. ${option}`;
+        btn.addEventListener("click", () => handleOptionClick(index, btn));
+        optionsWrap.appendChild(btn);
+      });
+
+      startTimer();
+    }
+
+    function disableAllOptions() {
+      const buttons = optionsWrap.querySelectorAll(".btn-option");
+      buttons.forEach(btn => {
+        btn.disabled = true;
+      });
+    }
+
+    function showCorrectAnswer(answerIndex, explanation, introText = "Correct answer shown.") {
+      stopTimer();
+      disableAllOptions();
+
+      const buttons = optionsWrap.querySelectorAll(".btn-option");
+      buttons.forEach((btn, idx) => {
+        if (idx === answerIndex) {
+          btn.classList.add("correct");
+        }
+      });
+
+      feedbackBox.className = "feedback info show";
+      feedbackBox.innerHTML = `<strong>${introText}</strong><br>${explanation}`;
+    }
+
+    function handleOptionClick(selectedIndex, clickedBtn) {
+      if (locked) return;
+
+      const currentQuestion = quizData[currentIndex];
+
+      if (selectedIndex === currentQuestion.answerIndex) {
+        locked = true;
+        stopTimer();
+        clickedBtn.classList.add("correct");
+        disableAllOptions();
+
+        score++;
+        scoreValue.textContent = score;
+        playAudio(audioCorrect);
+
+        feedbackBox.className = "feedback success show";
+        feedbackBox.innerHTML = `<strong>Well done!</strong><br>${currentQuestion.explanation}`;
+        nextBtn.disabled = false;
+        return;
+      }
+
+      attempts++;
+      clickedBtn.classList.add("wrong");
+      clickedBtn.disabled = true;
+      playAudio(audioWrong);
+
+      if (attempts === 1) {
+        tryValue.textContent = "2 / 2";
+        feedbackBox.className = "feedback error show";
+        feedbackBox.innerHTML = "<strong>Try again.</strong><br>You have one more chance.";
+      } else {
+        locked = true;
+        showCorrectAnswer(
+          currentQuestion.answerIndex,
+          currentQuestion.explanation,
+          "That was not correct."
+        );
+        nextBtn.disabled = false;
+      }
+    }
+
+    function goToNextStep() {
+      if (currentIndex === TOTAL_QUESTIONS - 1) {
+        showResults();
+        return;
+      }
+
+      currentIndex++;
+
+      if (currentIndex === TOTAL_QUESTIONS - 1) {
+        showScreen(challengeScreen);
+        return;
+      }
+
+      showScreen(quizScreen);
+      renderQuestion();
+    }
+
+    function showResults() {
+      stopTimer();
+      stopAudio(audioTimer);
+      playAudio(audioFinalWin);
+
+      showScreen(resultScreen);
+      finalScore.textContent = `${score} / ${TOTAL_QUESTIONS}`;
+      correctCount.textContent = score;
+
+      const percent = Math.round((score / TOTAL_QUESTIONS) * 100);
+
+      if (percent >= 85) {
+        resultMessage.textContent = "Excellent work! You showed strong understanding of the chapter.";
+      } else if (percent >= 60) {
+        resultMessage.textContent = "Good job! Keep practicing to become even stronger.";
+      } else {
+        resultMessage.textContent = "Nice effort! Review the chapter and try again to improve your score.";
+      }
+    }
+
+    function restartQuiz() {
+      currentIndex = 0;
+      score = 0;
+      attempts = 0;
+      timer = QUESTION_TIME;
+      locked = false;
+      clearInterval(timerInterval);
+      stopAudio(audioTimer);
+      stopAudio(audioWrong);
+      stopAudio(audioCorrect);
+      stopAudio(audioFinalWin);
+
+      scoreValue.textContent = "0";
+      questionCount.textContent = `1 / ${TOTAL_QUESTIONS}`;
+      timerValue.textContent = QUESTION_TIME + "s";
+      tryValue.textContent = "1 / 2";
+      progressFill.style.width = "0%";
+      progressText.textContent = "0%";
+
+      showScreen(introScreen);
+    }
+
+    startBtn.addEventListener("click", () => {
+      showScreen(quizScreen);
+      renderQuestion();
+    });
+
+    beginChallengeBtn.addEventListener("click", () => {
+      showScreen(quizScreen);
+      renderQuestion();
+    });
+
+    nextBtn.addEventListener("click", () => {
+      goToNextStep();
+    });
+
+    restartBtn.addEventListener("click", () => {
+      restartQuiz();
+    });
+
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        logoSplash.style.display = "none";
+      }, 5000);
+    });
+  </script>
+</body>
+</html>
