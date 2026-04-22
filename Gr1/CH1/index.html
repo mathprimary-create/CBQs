@@ -542,9 +542,9 @@
   </div>
 
   <audio id="audioWrong" preload="auto" src="assets/lose.mp3"></audio>
-  <audio id="audioTimer" preload="auto" src="assets/timer-sound.mp3" loop></audio>
+  <audio id="audioTimer" preload="auto" src="assets/timer_sound.mp3" loop></audio>
   <audio id="audioCorrect" preload="auto" src="assets/win.mp3"></audio>
-  <audio id="audioFinalWin" preload="auto" src="assets/win1.mp3"></audio>
+  <audio id="audioFinalWin" preload="auto" src="assets/win.mp3"></audio>
 
   <script>
     const quizData = [
@@ -716,10 +716,13 @@
       screen.classList.add("active");
     }
 
-    function playAudio(audioEl) {
+    function safePlay(audioEl) {
       if (!audioEl) return;
       audioEl.currentTime = 0;
-      audioEl.play().catch(() => {});
+      const playPromise = audioEl.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {});
+      }
     }
 
     function stopAudio(audioEl) {
@@ -739,11 +742,12 @@
       timer = QUESTION_TIME;
       timerValue.textContent = timer + "s";
       stopAudio(audioTimer);
-      playAudio(audioTimer);
+      safePlay(audioTimer);
 
       timerInterval = setInterval(() => {
         timer--;
         timerValue.textContent = timer + "s";
+
         if (timer <= 0) {
           clearInterval(timerInterval);
           stopAudio(audioTimer);
@@ -760,6 +764,7 @@
     function handleTimeUp() {
       if (locked) return;
       locked = true;
+
       const currentQuestion = quizData[currentIndex];
       showCorrectAnswer(currentQuestion.answerIndex, currentQuestion.explanation, "Time is up!");
       nextBtn.disabled = false;
@@ -833,7 +838,7 @@
 
         score++;
         scoreValue.textContent = score;
-        playAudio(audioCorrect);
+        safePlay(audioCorrect);
 
         feedbackBox.className = "feedback success show";
         feedbackBox.innerHTML = `<strong>Well done!</strong><br>${currentQuestion.explanation}`;
@@ -844,7 +849,7 @@
       attempts++;
       clickedBtn.classList.add("wrong");
       clickedBtn.disabled = true;
-      playAudio(audioWrong);
+      safePlay(audioWrong);
 
       if (attempts === 1) {
         tryValue.textContent = "2 / 2";
@@ -881,7 +886,7 @@
     function showResults() {
       stopTimer();
       stopAudio(audioTimer);
-      playAudio(audioFinalWin);
+      safePlay(audioFinalWin);
 
       showScreen(resultScreen);
       finalScore.textContent = `${score} / ${TOTAL_QUESTIONS}`;
