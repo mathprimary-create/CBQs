@@ -90,8 +90,8 @@ button {
 }
 
 .question-img {
-  max-width: 220px;
-  max-height: 160px;
+  max-width: 280px;
+  max-height: 190px;
   object-fit: contain;
   display: block;
   margin: 12px auto;
@@ -176,6 +176,11 @@ button {
   .badge {
     font-size: 14px;
   }
+
+  .question-img {
+    max-width: 230px;
+    max-height: 160px;
+  }
 }
 </style>
 </head>
@@ -219,8 +224,8 @@ button {
 <script>
 const questions = [
   {
-    q: "Sia has 5 red balloons and Zoya has 5 blue balloons. Which statement is true?",
-    img: "assets/balloons.png",
+    q: "Sia has 5 red balloons and Zoya has 5 blue balloons. Which of the following statements is true?",
+    img: "",
     options: [
       "Sia has less balloons than Zoya.",
       "Zoya has less balloons than Sia.",
@@ -230,7 +235,7 @@ const questions = [
     answer: 2
   },
   {
-    q: "Sanju made a number using 4 bundles of ten sticks and 3 single sticks. Sonia says the number is 34. Is she correct?",
+    q: "Sanju built a number using 4 bundles of ten sticks and 3 single sticks. Sonia says the number is 34. Is she correct?",
     img: "assets/sticks.png",
     options: [
       "Yes, the number is 34.",
@@ -242,7 +247,7 @@ const questions = [
   },
   {
     q: "Meera has no pencils in her box. Which number shows this?",
-    img: "assets/blue-box.png",
+    img: "",
     options: [
       "1 tens and 1 ones",
       "10 tens and 0 ones",
@@ -252,37 +257,52 @@ const questions = [
     answer: 2
   },
   {
-    q: "The teacher shows some balloons. Who counted correctly?",
+    q: "The teacher conducts a counting exercise in class. She shows the image given. Ananya counts 45 balloons, Prisha counts 43 balloons, Arjun counts 41 balloons and Aryan counts 42 balloons. Who has counted correctly?",
     img: "assets/balloons.png",
     options: [
-      "Ananya counted 45",
-      "Prisha counted 43",
-      "Arjun counted 41",
-      "Aryan counted 42"
+      "Ananya",
+      "Prisha",
+      "Arjun",
+      "Aryan"
     ],
     answer: 2
   },
   {
-    q: "Rohan is on number 29 in Snakes and Ladders. He rolls 2. Which number will he reach?",
-    img: "assets/balls.png",
-    options: ["28", "30", "31", "27"],
+    q: "Rohan is playing Snakes and Ladders. His counter is on 29. He rolls the dice that shows 2. Which number will he reach?",
+    img: "",
+    options: [
+      "28",
+      "30",
+      "31",
+      "27"
+    ],
     answer: 2
   },
   {
-    q: "Rutvi lives on the 10th floor, Mayank on the 7th, Pearl on the 4th and Krupa on the 9th. Who will get out of the lift first?",
+    q: "Rutvi, Pearl, Krupa and Mayank get into a lift from the ground floor. Rutvi lives on the 10th floor, Mayank on the 7th floor, Pearl on the 4th floor and Krupa on the 9th floor. Who will get out of the lift first?",
     img: "",
-    options: ["Rutvi", "Mayank", "Pearl", "Krupa"],
+    options: [
+      "Rutvi",
+      "Mayank",
+      "Pearl",
+      "Krupa"
+    ],
     answer: 2
   },
   {
-    q: "In a match, Rohan scored 23, Mohan scored 32, Rita scored 47 and Sita scored 24. Who made the most runs?",
+    q: "In a match Rohan scored 23 runs, Mohan scored 32 runs, Rita scored 47 runs and Sita scored 24 runs. Who made the most runs?",
     img: "",
-    options: ["Rita", "Sita", "Rohan", "Mohan"],
+    options: [
+      "Rita",
+      "Sita",
+      "Rohan",
+      "Mohan"
+    ],
     answer: 0
   },
   {
-    q: "Aisha collected 42 stickers, Rasha collected 32 stickers and Kiaan collected 45 stickers. Who should stand from least to most?",
-    img: "assets/stars.png",
+    q: "Aisha collected 42 stickers, Rasha collected 32 stickers and Kiaan collected 45 stickers. They want to stand in a line from the one who collected the least to the most stickers. How should they stand?",
+    img: "",
     options: [
       "Kiaan, Rasha, Aisha",
       "Aisha, Rasha, Kiaan",
@@ -292,7 +312,7 @@ const questions = [
     answer: 2
   },
   {
-    q: "On an abacus, there are 6 beads in tens place and 1 bead in ones place. How can Aksh show 70 by moving just 1 bead?",
+    q: "On an abacus, there are 6 beads in tens place and 1 bead in ones place. Aksh wants to show the number 70 on the same abacus. How can he do so by moving just 1 bead?",
     img: "assets/abacus.png",
     options: [
       "Move 1 bead from ones to tens.",
@@ -303,7 +323,7 @@ const questions = [
     answer: 0
   },
   {
-    q: "Asif says, “The number 39 has 3 ones and 9 tens.” Choose the correct statement.",
+    q: "Asif says: “The number 39 has 3 ones and 9 tens.” Why is his statement incorrect?",
     img: "",
     options: [
       "The number 39 has 3 tens and 9 ones.",
@@ -314,7 +334,7 @@ const questions = [
     answer: 0
   },
   {
-    q: "Four students made statements about 45 and 40. Who made the mistake?",
+    q: "Four students made statements about the numbers 45 and 40. One of them is incorrect. Who made the mistake?",
     img: "",
     options: [
       "Gopi: 45 is greater than 40.",
@@ -325,13 +345,13 @@ const questions = [
     answer: 1
   },
   {
-    q: "The teacher writes 77, 78, 79 on the board. Rohit says the next number is eighty-two. Is he correct?",
-    img: "",
+    q: "Meena has gathered some apples from the orchard and arranged them as shown. How many apples did Meena collect?",
+    img: "assets/apples.png",
     options: [
-      "Yes",
-      "No, it should be 81.",
-      "No, it should be seventy-nine.",
-      "No, it should be eighty."
+      "33 apples",
+      "43 apples",
+      "60 apples",
+      "24 apples"
     ],
     answer: 3
   }
