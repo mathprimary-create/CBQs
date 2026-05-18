@@ -2,237 +2,530 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-<title>Grade 1 Number System Interactive</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grade 1 Maths CBQ Interactive</title>
 
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial, sans-serif;
+* {
+  box-sizing: border-box;
 }
 
-body{
-background:#f2f7ff;
-overflow-x:hidden;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f7fb;
+  color: #1f2937;
 }
 
-#splashScreen{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100vh;
-background:white;
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:9999;
-flex-direction:column;
+.logo-screen {
+  position: fixed;
+  inset: 0;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
 }
 
-#splashScreen img{
-width:220px;
-max-width:80%;
+.logo-screen img {
+  max-width: 220px;
+  width: 70%;
 }
 
-#gameContainer{
-display:none;
-padding:20px;
-max-width:900px;
-margin:auto;
+.game {
+  max-width: 760px;
+  margin: auto;
+  padding: 16px;
 }
 
-.topBar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:20px;
-gap:10px;
-flex-wrap:wrap;
+.header {
+  background: #ffffff;
+  padding: 14px;
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin-bottom: 16px;
+  flex-wrap: wrap;
 }
 
-.progressBox{
-background:white;
-padding:10px 18px;
-border-radius:12px;
-font-weight:bold;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
+.badge {
+  background: #e0f2fe;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-weight: bold;
+  font-size: 16px;
 }
 
-.scoreBox{
-background:white;
-padding:10px 18px;
-border-radius:12px;
-font-weight:bold;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
+button {
+  border: none;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 18px;
+  cursor: pointer;
+  font-weight: bold;
 }
 
-.questionCard{
-background:white;
-padding:25px;
-border-radius:20px;
-box-shadow:0 4px 10px rgba(0,0,0,0.12);
-text-align:center;
+.mute-btn {
+  background: #374151;
+  color: white;
+  font-size: 15px;
+  padding: 10px 14px;
 }
 
-.questionText{
-font-size:28px;
-font-weight:bold;
-margin-bottom:25px;
-color:#1b2b52;
-line-height:1.4;
+.card {
+  background: white;
+  padding: 18px;
+  border-radius: 18px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 }
 
-.imageBox img{
-width:100%;
-max-width:550px;
-border-radius:16px;
-margin-bottom:25px;
+.question {
+  font-size: 22px;
+  line-height: 1.4;
+  font-weight: bold;
+  margin-bottom: 14px;
 }
 
-.optionsGrid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:16px;
-margin-top:20px;
+.question-img {
+  max-width: 220px;
+  max-height: 160px;
+  object-fit: contain;
+  display: block;
+  margin: 12px auto;
 }
 
-.optionBtn{
-padding:18px;
-border:none;
-border-radius:16px;
-background:#eaf1ff;
-font-size:22px;
-font-weight:bold;
-cursor:pointer;
-transition:0.3s;
+.options {
+  display: grid;
+  gap: 12px;
 }
 
-.optionBtn:hover{
-background:#d5e4ff;
-transform:scale(1.03);
+.option {
+  background: #f9fafb;
+  border: 2px solid #d1d5db;
+  color: #111827;
+  text-align: left;
 }
 
-.correct{
-background:#7CFC8A !important;
+.option:hover {
+  background: #eef6ff;
 }
 
-.wrong{
-background:#ff8a8a !important;
+.correct {
+  background: #dcfce7 !important;
+  border-color: #16a34a !important;
 }
 
-#feedbackText{
-margin-top:20px;
-font-size:26px;
-font-weight:bold;
-min-height:40px;
+.wrong {
+  background: #fee2e2 !important;
+  border-color: #dc2626 !important;
 }
 
-#nextBtn{
-margin-top:25px;
-padding:16px 28px;
-border:none;
-border-radius:16px;
-background:#3b82f6;
-color:white;
-font-size:22px;
-font-weight:bold;
-cursor:pointer;
-display:none;
+.feedback {
+  font-size: 20px;
+  margin-top: 14px;
+  font-weight: bold;
+  min-height: 28px;
 }
 
-#nextBtn:hover{
-background:#2563eb;
+.next-btn, .start-btn, .restart-btn {
+  background: #2563eb;
+  color: white;
+  width: 100%;
+  margin-top: 16px;
 }
 
-@media(max-width:768px){
-
-.questionText{
-font-size:22px;
+.result {
+  text-align: center;
+  font-size: 24px;
+  line-height: 1.5;
 }
 
-.optionBtn{
-font-size:18px;
-padding:14px;
+.hidden {
+  display: none;
 }
 
-.optionsGrid{
-grid-template-columns:1fr;
+.confetti {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  top: -10px;
+  animation: fall 1s linear forwards;
+  z-index: 998;
 }
 
+@keyframes fall {
+  to {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
 }
 
+@media (max-width: 600px) {
+  .question {
+    font-size: 20px;
+  }
+
+  button {
+    font-size: 17px;
+    padding: 14px;
+  }
+
+  .badge {
+    font-size: 14px;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<div id="splashScreen">
-<img src="assets/logo.png">
+<div class="logo-screen" id="logoScreen">
+  <img src="assets/logo.png" alt="Innovine Logo">
 </div>
 
-<div id="gameContainer">
+<div class="game hidden" id="game">
 
-<div class="topBar">
-<div class="progressBox">
-Question: <span id="questionNumber">1</span>/20
-</div>
+  <div class="header">
+    <div class="badge" id="qCount">Question 1/12</div>
+    <div class="badge" id="score">Score: 0</div>
+    <div class="badge" id="timer">60s</div>
+    <button class="mute-btn" onclick="toggleMute()" id="muteBtn">🔊 Sound</button>
+  </div>
 
-<div class="scoreBox">
-⭐ Score: <span id="score">0</span>
-</div>
-</div>
+  <div class="card" id="startCard">
+    <div class="question">Ready to play the Number System quiz?</div>
+    <p>Read each question carefully. You will get one retry after a wrong answer.</p>
+    <button class="start-btn" onclick="startGame()">Start</button>
+  </div>
 
-<div class="questionCard">
+  <div class="card hidden" id="quizCard">
+    <div class="question" id="questionText"></div>
+    <img id="questionImage" class="question-img hidden" alt="Question Image">
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="next-btn hidden" id="nextBtn" onclick="nextQuestion()">Next</button>
+  </div>
 
-<div class="questionText" id="questionText">
-Loading Question...
-</div>
+  <div class="card hidden result" id="resultCard"></div>
 
-<div class="imageBox">
-<img id="questionImage" src="">
-</div>
-
-<div class="optionsGrid" id="optionsGrid">
-</div>
-
-<div id="feedbackText"></div>
-
-<button id="nextBtn">
-Next Question →
-</button>
-
-</div>
 </div>
 
 <audio id="correctSound" src="assets/correct.mp3"></audio>
 <audio id="wrongSound" src="assets/wrong.mp3"></audio>
-<audio id="clapSound" src="assets/claps.mp3"></audio>
 
 <script>
-
-setTimeout(() => {
-document.getElementById("splashScreen").style.display = "none";
-document.getElementById("gameContainer").style.display = "block";
-}, 5000);
-
-let currentQuestion = 0;
-let score = 0;
-
 const questions = [
-
+  {
+    q: "Sia has 5 red balloons and Zoya has 5 blue balloons. Which statement is true?",
+    img: "assets/balloons.png",
+    options: [
+      "Sia has less balloons than Zoya.",
+      "Zoya has less balloons than Sia.",
+      "They both have the same number of balloons.",
+      "They have no balloons."
+    ],
+    answer: 2
+  },
+  {
+    q: "Sanju made a number using 4 bundles of ten sticks and 3 single sticks. Sonia says the number is 34. Is she correct?",
+    img: "assets/sticks.png",
+    options: [
+      "Yes, the number is 34.",
+      "No, the number is 43.",
+      "No, the number is 41.",
+      "No, the number is 35."
+    ],
+    answer: 1
+  },
+  {
+    q: "Meera has no pencils in her box. Which number shows this?",
+    img: "assets/blue-box.png",
+    options: [
+      "1 tens and 1 ones",
+      "10 tens and 0 ones",
+      "0 tens and 0 ones",
+      "0 tens and 1 ones"
+    ],
+    answer: 2
+  },
+  {
+    q: "The teacher shows some balloons. Who counted correctly?",
+    img: "assets/balloons.png",
+    options: [
+      "Ananya counted 45",
+      "Prisha counted 43",
+      "Arjun counted 41",
+      "Aryan counted 42"
+    ],
+    answer: 2
+  },
+  {
+    q: "Rohan is on number 29 in Snakes and Ladders. He rolls 2. Which number will he reach?",
+    img: "assets/balls.png",
+    options: ["28", "30", "31", "27"],
+    answer: 2
+  },
+  {
+    q: "Rutvi lives on the 10th floor, Mayank on the 7th, Pearl on the 4th and Krupa on the 9th. Who will get out of the lift first?",
+    img: "",
+    options: ["Rutvi", "Mayank", "Pearl", "Krupa"],
+    answer: 2
+  },
+  {
+    q: "In a match, Rohan scored 23, Mohan scored 32, Rita scored 47 and Sita scored 24. Who made the most runs?",
+    img: "",
+    options: ["Rita", "Sita", "Rohan", "Mohan"],
+    answer: 0
+  },
+  {
+    q: "Aisha collected 42 stickers, Rasha collected 32 stickers and Kiaan collected 45 stickers. Who should stand from least to most?",
+    img: "assets/stars.png",
+    options: [
+      "Kiaan, Rasha, Aisha",
+      "Aisha, Rasha, Kiaan",
+      "Rasha, Aisha, Kiaan",
+      "Kiaan, Aisha, Rasha"
+    ],
+    answer: 2
+  },
+  {
+    q: "On an abacus, there are 6 beads in tens place and 1 bead in ones place. How can Aksh show 70 by moving just 1 bead?",
+    img: "assets/abacus.png",
+    options: [
+      "Move 1 bead from ones to tens.",
+      "Move 1 bead from tens to ones.",
+      "Remove 1 bead from tens.",
+      "Add 1 bead to ones."
+    ],
+    answer: 0
+  },
+  {
+    q: "Asif says, “The number 39 has 3 ones and 9 tens.” Choose the correct statement.",
+    img: "",
+    options: [
+      "The number 39 has 3 tens and 9 ones.",
+      "The number 93 has 3 tens and 9 ones.",
+      "The number 39 has 0 ones.",
+      "The number 39 has 0 tens."
+    ],
+    answer: 0
+  },
+  {
+    q: "Four students made statements about 45 and 40. Who made the mistake?",
+    img: "",
+    options: [
+      "Gopi: 45 is greater than 40.",
+      "Aman: 45 is smaller than 40.",
+      "Jenny: 45 has more ones than 40.",
+      "Kabir: Both numbers have 4 tens."
+    ],
+    answer: 1
+  },
+  {
+    q: "The teacher writes 77, 78, 79 on the board. Rohit says the next number is eighty-two. Is he correct?",
+    img: "",
+    options: [
+      "Yes",
+      "No, it should be 81.",
+      "No, it should be seventy-nine.",
+      "No, it should be eighty."
+    ],
+    answer: 3
+  }
 ];
 
-function loadQuestion(){
+let current = 0;
+let score = 0;
+let attempts = 0;
+let timeLeft = 60;
+let timerInterval;
+let muted = false;
+let answered = false;
 
+const logoScreen = document.getElementById("logoScreen");
+const game = document.getElementById("game");
+const startCard = document.getElementById("startCard");
+const quizCard = document.getElementById("quizCard");
+const resultCard = document.getElementById("resultCard");
+const questionText = document.getElementById("questionText");
+const questionImage = document.getElementById("questionImage");
+const optionsDiv = document.getElementById("options");
+const feedback = document.getElementById("feedback");
+const nextBtn = document.getElementById("nextBtn");
+const scoreBox = document.getElementById("score");
+const timerBox = document.getElementById("timer");
+const qCount = document.getElementById("qCount");
+const correctSound = document.getElementById("correctSound");
+const wrongSound = document.getElementById("wrongSound");
+const muteBtn = document.getElementById("muteBtn");
+
+setTimeout(() => {
+  logoScreen.style.display = "none";
+  game.classList.remove("hidden");
+}, 5000);
+
+function startGame() {
+  startCard.classList.add("hidden");
+  quizCard.classList.remove("hidden");
+  loadQuestion();
 }
 
-loadQuestion();
+function loadQuestion() {
+  clearInterval(timerInterval);
+  timeLeft = 60;
+  attempts = 0;
+  answered = false;
+  feedback.textContent = "";
+  nextBtn.classList.add("hidden");
 
+  const item = questions[current];
+  qCount.textContent = `Question ${current + 1}/12`;
+  scoreBox.textContent = `Score: ${score}`;
+  timerBox.textContent = `${timeLeft}s`;
+
+  questionText.textContent = item.q;
+  optionsDiv.innerHTML = "";
+
+  if (item.img) {
+    questionImage.src = item.img;
+    questionImage.classList.remove("hidden");
+  } else {
+    questionImage.classList.add("hidden");
+  }
+
+  item.options.forEach((opt, index) => {
+    const btn = document.createElement("button");
+    btn.className = "option";
+    btn.textContent = opt;
+    btn.onclick = () => checkAnswer(index, btn);
+    optionsDiv.appendChild(btn);
+  });
+
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    timerBox.textContent = `${timeLeft}s`;
+
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      feedback.textContent = "Time up!";
+      disableOptions();
+      nextBtn.classList.remove("hidden");
+    }
+  }, 1000);
+}
+
+function checkAnswer(selected, button) {
+  if (answered) return;
+
+  const correct = questions[current].answer;
+
+  if (selected === correct) {
+    answered = true;
+    score++;
+    scoreBox.textContent = `Score: ${score}`;
+    button.classList.add("correct");
+    feedback.textContent = "Correct!";
+    playSound(correctSound);
+    showConfetti();
+    clearInterval(timerInterval);
+    disableOptions();
+    nextBtn.classList.remove("hidden");
+  } else {
+    attempts++;
+    button.classList.add("wrong");
+    playSound(wrongSound);
+
+    if (attempts < 2) {
+      feedback.textContent = "Try again!";
+      button.disabled = true;
+    } else {
+      answered = true;
+      feedback.textContent = "Incorrect. Move to the next question.";
+      clearInterval(timerInterval);
+      disableOptions();
+      highlightCorrect();
+      nextBtn.classList.remove("hidden");
+    }
+  }
+}
+
+function disableOptions() {
+  document.querySelectorAll(".option").forEach(btn => btn.disabled = true);
+}
+
+function highlightCorrect() {
+  const correct = questions[current].answer;
+  document.querySelectorAll(".option")[correct].classList.add("correct");
+}
+
+function nextQuestion() {
+  current++;
+  if (current < questions.length) {
+    loadQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  quizCard.classList.add("hidden");
+  resultCard.classList.remove("hidden");
+
+  const percent = (score / questions.length) * 100;
+  let message = "";
+
+  if (percent >= 75) {
+    message = "Good job";
+  } else if (percent >= 40) {
+    message = "Review this chapter and try again";
+  } else {
+    message = "Let’s practise more";
+  }
+
+  resultCard.innerHTML = `
+    <h2>${message}</h2>
+    <p>Your Score: <strong>${score}/${questions.length}</strong></p>
+    <button class="restart-btn" onclick="restartGame()">Restart</button>
+  `;
+}
+
+function restartGame() {
+  current = 0;
+  score = 0;
+  resultCard.classList.add("hidden");
+  quizCard.classList.remove("hidden");
+  loadQuestion();
+}
+
+function playSound(sound) {
+  if (!muted) {
+    sound.currentTime = 0;
+    sound.play().catch(() => {});
+  }
+}
+
+function toggleMute() {
+  muted = !muted;
+  muteBtn.textContent = muted ? "🔇 Muted" : "🔊 Sound";
+}
+
+function showConfetti() {
+  for (let i = 0; i < 30; i++) {
+    const piece = document.createElement("div");
+    piece.className = "confetti";
+    piece.style.left = Math.random() * 100 + "vw";
+    piece.style.background = ["#2563eb", "#16a34a", "#f59e0b", "#dc2626"][Math.floor(Math.random() * 4)];
+    piece.style.animationDuration = 0.8 + Math.random() * 0.8 + "s";
+    document.body.appendChild(piece);
+
+    setTimeout(() => {
+      piece.remove();
+    }, 1600);
+  }
+}
 </script>
 
 </body>
