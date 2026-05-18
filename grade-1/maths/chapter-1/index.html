@@ -6,6 +6,7 @@
 <title>Grade 1 Maths CBQ Interactive</title>
 
 <style>
+
 *{
   box-sizing:border-box;
 }
@@ -90,8 +91,9 @@ button{
 }
 
 .question-img{
-  max-width:320px;
-  max-height:220px;
+  width:95%;
+  max-width:760px;
+  height:auto;
   object-fit:contain;
   display:block;
   margin:12px auto;
@@ -181,10 +183,12 @@ button{
   }
 
   .question-img{
-    max-width:250px;
-    max-height:180px;
+    width:100%;
+    max-width:760px;
+    height:auto;
   }
 }
+
 </style>
 </head>
 
@@ -200,17 +204,42 @@ button{
     <div class="badge" id="qCount">Question 1/12</div>
     <div class="badge" id="score">Score: 0</div>
     <div class="badge" id="timer">60s</div>
-    <button class="mute-btn" onclick="toggleMute()" id="muteBtn">🔊 Sound</button>
+
+    <button
+      class="mute-btn"
+      onclick="toggleMute()"
+      id="muteBtn"
+    >
+      🔊 Sound
+    </button>
   </div>
 
   <div class="card" id="startCard">
-    <div class="question">Ready to play the Number System quiz?</div>
-    <p>Read each question carefully. You will get one retry after a wrong answer.</p>
-    <button class="start-btn" onclick="startGame()">Start</button>
+
+    <div class="question">
+      Ready to play the Number System quiz?
+    </div>
+
+    <p>
+      Read each question carefully.
+      You will get one retry after a wrong answer.
+    </p>
+
+    <button
+      class="start-btn"
+      onclick="startGame()"
+    >
+      Start
+    </button>
+
   </div>
 
   <div class="card hidden" id="quizCard">
-    <div class="question" id="questionText"></div>
+
+    <div
+      class="question"
+      id="questionText"
+    ></div>
 
     <img
       id="questionImage"
@@ -218,9 +247,15 @@ button{
       alt="Question Image"
     >
 
-    <div class="options" id="options"></div>
+    <div
+      class="options"
+      id="options"
+    ></div>
 
-    <div class="feedback" id="feedback"></div>
+    <div
+      class="feedback"
+      id="feedback"
+    ></div>
 
     <button
       class="next-btn hidden"
@@ -229,14 +264,25 @@ button{
     >
       Next
     </button>
+
   </div>
 
-  <div class="card hidden result" id="resultCard"></div>
+  <div
+    class="card hidden result"
+    id="resultCard"
+  ></div>
 
 </div>
 
-<audio id="correctSound" src="assets/correct.mp3"></audio>
-<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio
+  id="correctSound"
+  src="assets/correct.mp3">
+</audio>
+
+<audio
+  id="wrongSound"
+  src="assets/wrong.mp3">
+</audio>
 
 <script>
 
@@ -418,13 +464,19 @@ const wrongSound = document.getElementById("wrongSound");
 const muteBtn = document.getElementById("muteBtn");
 
 setTimeout(() => {
+
   logoScreen.style.display = "none";
+
   game.classList.remove("hidden");
-}, 5000);
+
+},5000);
 
 function startGame(){
+
   startCard.classList.add("hidden");
+
   quizCard.classList.remove("hidden");
+
   loadQuestion();
 }
 
@@ -437,22 +489,32 @@ function loadQuestion(){
   answered = false;
 
   feedback.textContent = "";
+
   nextBtn.classList.add("hidden");
 
   const item = questions[current];
 
-  qCount.textContent = `Question ${current + 1}/12`;
-  scoreBox.textContent = `Score: ${score}`;
-  timerBox.textContent = `${timeLeft}s`;
+  qCount.textContent =
+    `Question ${current + 1}/12`;
+
+  scoreBox.textContent =
+    `Score: ${score}`;
+
+  timerBox.textContent =
+    `${timeLeft}s`;
 
   questionText.textContent = item.q;
 
   optionsDiv.innerHTML = "";
 
   if(item.img){
+
     questionImage.src = item.img;
+
     questionImage.classList.remove("hidden");
+
   } else {
+
     questionImage.classList.add("hidden");
   }
 
@@ -461,6 +523,7 @@ function loadQuestion(){
     const btn = document.createElement("button");
 
     btn.className = "option";
+
     btn.textContent = opt;
 
     btn.onclick = () => checkAnswer(index, btn);
@@ -501,7 +564,8 @@ function checkAnswer(selected,button){
 
     score++;
 
-    scoreBox.textContent = `Score: ${score}`;
+    scoreBox.textContent =
+      `Score: ${score}`;
 
     button.classList.add("correct");
 
@@ -535,7 +599,8 @@ function checkAnswer(selected,button){
 
       answered = true;
 
-      feedback.textContent = "Incorrect. Move to the next question.";
+      feedback.textContent =
+        "Incorrect. Move to the next question.";
 
       clearInterval(timerInterval);
 
@@ -550,9 +615,8 @@ function checkAnswer(selected,button){
 
 function disableOptions(){
 
-  document.querySelectorAll(".option").forEach(btn => {
-    btn.disabled = true;
-  });
+  document.querySelectorAll(".option")
+    .forEach(btn => btn.disabled = true);
 }
 
 function highlightCorrect(){
@@ -583,7 +647,8 @@ function showResult(){
 
   resultCard.classList.remove("hidden");
 
-  const percent = (score / questions.length) * 100;
+  const percent =
+    (score / questions.length) * 100;
 
   let message = "";
 
@@ -602,8 +667,14 @@ function showResult(){
 
   resultCard.innerHTML = `
     <h2>${message}</h2>
-    <p>Your Score: <strong>${score}/${questions.length}</strong></p>
-    <button class="restart-btn" onclick="restartGame()">
+    <p>Your Score:
+    <strong>${score}/${questions.length}</strong>
+    </p>
+
+    <button
+      class="restart-btn"
+      onclick="restartGame()"
+    >
       Restart
     </button>
   `;
@@ -643,11 +714,13 @@ function showConfetti(){
 
   for(let i=0; i<30; i++){
 
-    const piece = document.createElement("div");
+    const piece =
+      document.createElement("div");
 
     piece.className = "confetti";
 
-    piece.style.left = Math.random()*100 + "vw";
+    piece.style.left =
+      Math.random()*100 + "vw";
 
     piece.style.background =
       ["#2563eb","#16a34a","#f59e0b","#dc2626"]
@@ -659,7 +732,9 @@ function showConfetti(){
     document.body.appendChild(piece);
 
     setTimeout(() => {
+
       piece.remove();
+
     },1600);
   }
 }
